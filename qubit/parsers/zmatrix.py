@@ -3,7 +3,7 @@ class zmatrix:
     def __init__(self):
         pass
 
-    def loadzmatrixfromFile(self, file):
+    def load_zmatrix_from_file(self, file):
         atoms = []
         coordinates = []
         with open(file, 'r') as matrix:
@@ -14,9 +14,8 @@ class zmatrix:
                     if n == 0:
                         atoms.append(word)
                     elif n > 0:
-                        print(word)
-                        # Continue here
-                    coordinates.append(xyz)
+                        xyz.append(word)
                     n = n + 1
+                coordinates.append(xyz)
 
         return atoms, coordinates
