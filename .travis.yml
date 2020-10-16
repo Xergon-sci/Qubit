@@ -1,0 +1,14 @@
+language: python
+python:
+  - 3.5
+  - 3.6
+  - 3.7
+before_install:
+  - python --version
+  - pip install -U pip
+  - pip install codecov
+install:
+script:
+  - Unittest
+after_success:
+  - codecov
