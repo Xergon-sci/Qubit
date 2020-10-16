@@ -1,4 +1,4 @@
-from parsers.zmatrix import ZMatrix
+from qubit.parsers.zmatrix import ZMatrix
 from qubit.data import atomnumber
 
 

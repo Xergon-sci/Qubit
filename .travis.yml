@@ -8,7 +8,8 @@ before_install:
   - pip install -U pip
   - pip install codecov
 install:
+  - pip install -r requirements.txt
 script:
-  - Unittest
+  - Unittestpython -m unittest tests.test_parsers
 after_success:
   - codecov
