@@ -1,4 +1,4 @@
-class zmatrix:
+class ZMatrix:
 
     def __init__(self):
         pass

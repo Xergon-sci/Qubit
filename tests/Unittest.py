@@ -1,10 +1,10 @@
 import unittest
-from qubit.parsers.zmatrix import zmatrix
+from qubit.parsers.zmatrix import ZMatrix
 
 class TestParsers(unittest.TestCase):
 
     def test_matrix(self):
-        parser = zmatrix()
+        parser = ZMatrix()
         atomsCheck = ['C', 'H', 'H', 'H', 'H']
         xyzCheck = [['0.000000', '0.000000', '0.000000'],
         ['0.000000', '0.000000', '1.089000'],
