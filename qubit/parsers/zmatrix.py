@@ -1,3 +1,5 @@
+import numpy as np
+
 class ZMatrix:
 
     def __init__(self):
@@ -14,8 +16,7 @@ class ZMatrix:
                     if n == 0:
                         atoms.append(word)
                     elif n > 0:
-                        xyz.append(word)
+                        xyz.append(float(word))
                     n = n + 1
                 coordinates.append(xyz)
-
         return atoms, coordinates
