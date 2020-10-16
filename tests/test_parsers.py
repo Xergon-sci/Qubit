@@ -1,10 +1,14 @@
 import unittest
+import os
 from qubit.parsers.zmatrix import ZMatrix
+
+CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class TestZMatrixOperations(unittest.TestCase):
 
     def setUp(self):
         self.parser = ZMatrix()
+        self.methane = os.path.join(CUR_DIR, 'test_data/methane.xyz')
 
     def test_load_zmatrix_from_file(self):
         atomsCheck = ['C', 'H', 'H', 'H', 'H']
@@ -14,7 +18,7 @@ class TestZMatrixOperations(unittest.TestCase):
         ['-0.513360', '-0.889165', '-0.363000'],
         ['-0.513360', '0.889165', '-0.363000']]
         
-        atoms, xyz = self.parser.load_zmatrix_from_file('/data/brussel/102/vsc10255/qubit/tests/test.xyz')
+        atoms, xyz = self.parser.load_zmatrix_from_file(self.methane)
         self.assertEqual(atomsCheck, atoms)
         self.assertEqual(xyzCheck, xyz)
 
