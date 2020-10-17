@@ -1,4 +1,4 @@
-from qubit.parsers.xyz import XYZ
+from qubit.parsing.xyz import XYZ
 from qubit.data import atomnumber
 import numpy as np
 
