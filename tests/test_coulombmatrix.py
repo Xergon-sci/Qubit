@@ -8,4 +8,4 @@ methane = os.path.join(CUR_DIR, 'test_data/methane.xyz')
 def test_coulomb_matrix():
     cm = CoulombMatrix()
     m = cm.generate_coulomb_matrix(methane)
-    assert m != None
+    assert np.any(m != None)
