@@ -1,5 +1,5 @@
 import os
-from qubit.parsers.xyz import XYZ
+from qubit.parsing.xyz import XYZ
 
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 methane = os.path.join(CUR_DIR, 'test_data/methane.xyz')
