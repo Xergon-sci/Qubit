@@ -28,3 +28,17 @@ class CoulombMatrix:
                     cm[j][i] = cm[i][j]
         return cm
 
+    def randomize_coulomb_matrix(self, coulomb_matrix):
+        # calculate the row normals of a coulomb matrix
+        row_norms = np.array([np.linalg.norm(row) for row in coulomb_matrix], dtype=float)
+
+        # draw random numbers from a normal distribution
+        rand = np.random.RandomState()
+        n = rand.normal(size=row_norms.size)
+
+        # calcualte the permutation
+        p = np.argsort(row_norms + n)
+
+        # Permute row wise then coulomn wise
+        return coulomb_matrix[p][:,p]
+
