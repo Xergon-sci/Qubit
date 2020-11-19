@@ -1,8 +1,4 @@
-from qubit.descriptors import CoulombMatrix
-from qubit.preprocessing.matrix_operations import matrix_padding
-import numpy as np
+from qubit.utilities.gaussian import Extractor
 
-cm = CoulombMatrix()
-coulombMatrix = cm.generate_coulomb_matrix('/data/brussel/102/vsc10255/qubit/tests/test_data/methane.xyz')
-print("Randomized:")
-print(cm.randomize_coulomb_matrix(coulombMatrix))
+extractor = Extractor('/data/brussel/102/vsc10255/data/datasets/CNOS_sub1_10to20_10k/calculations/gaussian_output/JID_0.log')
+print(extractor.check_normal_execution())
