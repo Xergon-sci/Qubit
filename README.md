@@ -4,8 +4,7 @@
 ![GitHub](https://img.shields.io/github/license/Xergon-sci/Qubit?style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Xergon-sci/Qubit?style=for-the-badge)
 [![shields.io](https://img.shields.io/badge/code%20style-black-black?style=for-the-badge)](https://shields.io)
-[![forthebadge](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
+[![shields.io](https://img.shields.io/badge/BUILT%20WITH-SCIENCE-orange?style=for-the-badge)](https://shields.io)
 
 # Qubit
 Qubit is a package to assist chemical machine and deep learning.
