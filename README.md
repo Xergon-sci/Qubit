@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/Xergon-sci/qubit.svg?branch=main)](https://travis-ci.com/Xergon-sci/qubit)
-[![codecov](https://codecov.io/gh/Xergon-sci/qubit/branch/main/graph/badge.svg?token=WIGI0F5YTX)](undefined)
+![Continuous Integration](https://github.com/Xergon-sci/Qubit/workflows/Continuous%20Integration/badge.svg)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Xergon-sci/Qubit/graphs/commit-activity)
 
 # Qubit
