@@ -1,14 +1,14 @@
 import numpy as np
 
-class XYZ:
 
+class XYZ:
     def __init__(self):
         pass
 
     def load_xyz_from_file(self, file):
         atoms = []
         coordinates = []
-        with open(file, 'r') as matrix:
+        with open(file, "r") as matrix:
             for line, content in enumerate(matrix):
                 n = 0
                 xyz = []
