@@ -5,6 +5,12 @@ import mmap
 This is a test.
 """
 
+def testdoc():
+    """
+    This is a doc test
+    """
+    NotImplemented
+
 class Extractor:
     def __init__(self, filepath):
         self.filepath = filepath

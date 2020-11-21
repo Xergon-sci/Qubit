@@ -10,7 +10,7 @@ Qubit, you environment for chemical machine learning and deep learning.
 .. automodule:: qubit
 .. automodule:: parsing
 .. automodule:: preprocessing
-.. automodule:: utilities
+.. automodule:: gaussian
    :members:
 
 
