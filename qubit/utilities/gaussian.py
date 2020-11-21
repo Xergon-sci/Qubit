@@ -1,14 +1,28 @@
 import os
 import mmap
 
+"""This submodule aims to provide utilities for the gaussian software package.
+It will allow the user to quickly write custom interfaces to analyse the output files.
+"""
+
 class Extractor:
-    """This class supports the extraction of data from gaussian output files.
+    """This class supports data extraction from gaussian output files.
+    It provides functionality to extract all the implemented data at once or custom extraction
+    can be set up by using its public methods.
     """
 
     def __init__(self, filepath):
         self.filepath = filepath
 
     def _find_last_occurance(self, word):
+        """Support function that find the last occurance of a word in a file.
+
+        Args:
+            word (str): Word to search for in the file.
+
+        Returns:
+            mmap: Returns mmap located at the line the last occurance of {word} is at.
+        """
         with open(self.filepath, "r") as f:
             m = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
         i = m.rfind(str.encode(word))
@@ -17,7 +31,7 @@ class Extractor:
 
     def check_normal_execution(self):
         """Checks for normal execution of the gaussian output file.
-        Use this first when writing custom extraction methods to validate the file.
+        Use this first when writing custom extraction methods to check the validity of the calculations.
 
         Returns:
             Boolean: Returns True when a calculation has normal execution.
@@ -32,11 +46,12 @@ class Extractor:
             else:
                 return False
 
-    def extract_cartesian_coordinates(self):
-        """Extracts the optimized geometry from a gaussian output file.
+    def extract_optimized_geometry(self):
+        """Extracts the optimized geometry from the gaussian output file.
 
         Returns:
-            Array: Returns 2 arrays, one containng the atom numbers and onother containing the XYZ coordinates.
+            List: List with the atom numbers of the atoms.
+            List: List with the cartesian coordinates of the atoms.
         """
         m = self._find_last_occurance("Standard orientation")
         m.readline()

@@ -1,4 +1,4 @@
-Qubit, you environment for chemical machine learning and deep learning.
+Qubit, your environment for chemical machine learning and deep learning.
 =======================================================================
 
 .. toctree::
@@ -9,14 +9,8 @@ Qubit, you environment for chemical machine learning and deep learning.
    tutorial.rst
 
 .. automodule:: qubit
-.. automodule:: qubit.parsing
-.. automodule:: qubit.preprocessing
 .. automodule:: qubit.utilities.gaussian
    :members:
-
-
-
-
 
 Indices and tables
 ==================
