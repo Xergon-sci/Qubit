@@ -1,8 +1,13 @@
 Qubit's documentation!
 ======================
 
-.. automodule:: qubit.descriptors
-    :members:
+..automodule::descriptors
+..automodule::utilities
+  :members:
+
+..autoclass::Extractor
+  :members:
+
 
 .. toctree::
    :maxdepth: 2
