@@ -1,24 +1,14 @@
 import os
 import mmap
 
-"""
-This is a test.
-"""
-
-def testdoc():
-    """Test title
-
-    Retrieves rows pertaining to the given keys from the Table instance
-    represented by big_table.  Silly things may happen if
-    other_silly_variable is not None.
-    """
-    print('test func')
-
 class Extractor:
+    """This class supports the extraction of data from gaussian output files.
+    """
+
     def __init__(self, filepath):
         self.filepath = filepath
 
-    def find_last_occurance(self, word):
+    def _find_last_occurance(self, word):
         with open(self.filepath, "r") as f:
             m = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
         i = m.rfind(str.encode(word))
@@ -26,6 +16,12 @@ class Extractor:
         return m
 
     def check_normal_execution(self):
+        """Checks for normal execution of the gaussian output file.
+        Use this first when writing custom extraction methods to validate the file.
+
+        Returns:
+            Boolean: Returns True when a calculation has normal execution.
+        """
         with open(self.filepath, "rb") as f:
             f.seek(-2, os.SEEK_END)
             while f.read(1) != b"\n":
@@ -37,7 +33,12 @@ class Extractor:
                 return False
 
     def extract_cartesian_coordinates(self):
-        m = self.find_last_occurance("Standard orientation")
+        """Extracts the optimized geometry from a gaussian output file.
+
+        Returns:
+            Array: Returns 2 arrays, one containng the atom numbers and onother containing the XYZ coordinates.
+        """
+        m = self._find_last_occurance("Standard orientation")
         m.readline()
         m.readline()
         m.readline()
