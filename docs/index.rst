@@ -1,10 +1,8 @@
-.. Qubit documentation master file, created by
-   sphinx-quickstart on Sat Nov 21 12:19:20 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Qubit's documentation!
+======================
 
-Welcome to Qubit's documentation!
-=================================
+.. automodule:: qubit.descriptors
+    :members:
 
 .. toctree::
    :maxdepth: 2

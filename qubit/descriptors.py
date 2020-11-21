@@ -2,9 +2,22 @@ from qubit.parsing.xyz import XYZ
 from qubit.data import atomnumber
 import numpy as np
 
+"""
+descriptors.py
+====================================
+The core module of my example project
+"""
 
 class CoulombMatrix:
     def generate_coulomb_matrix(self, file):
+        """
+        Return the most important thing about a person.
+        Parameters
+        ----------
+        your_name
+            A string indicating the name of the person.
+        """
+
         # parse the input z-matrix
         parser = XYZ()
         atoms, xyz = parser.load_xyz_from_file(file)
