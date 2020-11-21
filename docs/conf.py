@@ -46,6 +46,9 @@ extensions = [
     'sphinx_rtd_theme',
 ]
 
+# Napoleon setting
+napoleon_google_docstring = True
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

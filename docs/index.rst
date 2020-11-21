@@ -1,17 +1,18 @@
 Qubit's documentation!
 ======================
 
-..automodule::descriptors
-..automodule::utilities
-  :members:
-
-..autoclass::Extractor
-  :members:
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   installation.rst
+
+.. automodule:: qubit
+.. automodule:: generating
+.. automodule:: parsing
+.. automodule:: preprocessing
+.. automodule:: utilities
+
 
 
 
