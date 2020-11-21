@@ -7,5 +7,8 @@
 [![shields.io](https://img.shields.io/badge/code%20style-black-black?style=for-the-badge)](https://shields.io)
 [![shields.io](https://img.shields.io/badge/BUILT%20WITH-SCIENCE-orange?style=for-the-badge)](https://shields.io)
 
-# Qubit [[Documentation!]https://qubit.readthedocs.io/en/latest/]
+# Qubit
 Qubit is a package to assist chemical machine and deep learning.
+
+# Documentation
+[Documentation!](https://qubit.readthedocs.io/en/latest/)
