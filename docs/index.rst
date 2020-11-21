@@ -1,5 +1,5 @@
-Qubit's documentation!
-======================
+Qubit, you environment for chemical machine learning and deep learning.
+=======================================================================
 
 .. toctree::
    :maxdepth: 2
@@ -8,10 +8,11 @@ Qubit's documentation!
    installation.rst
 
 .. automodule:: qubit
-.. automodule:: generating
 .. automodule:: parsing
 .. automodule:: preprocessing
 .. automodule:: utilities
+   :members:
+
 
 
 
