@@ -15,7 +15,7 @@ class Extractor:
         self.filepath = filepath
 
     def _find_last_occurance(self, word):
-        """Support function that find the last occurance of a word in a file.
+        """Support function that finds the last occurance of a word in a file.
 
         Args:
             word (str): Word to search for in the file.
@@ -30,11 +30,13 @@ class Extractor:
         return m
 
     def check_normal_execution(self):
-        """Checks for normal execution of the gaussian output file.
+        """Checks for normal execution
+
+        Checks for normal execution of the gaussian output file.
         Use this first when writing custom extraction methods to check the validity of the calculations.
 
         Returns:
-            Boolean: Returns True when a calculation has normal execution.
+            (bool): Returns True when a calculation has normal execution.
         """
         with open(self.filepath, "rb") as f:
             f.seek(-2, os.SEEK_END)
@@ -47,11 +49,15 @@ class Extractor:
                 return False
 
     def extract_optimized_geometry(self):
-        """Extracts the optimized geometry from the gaussian output file.
+        """Extracts the optimized geometry
+        
+        Extracts the optimized geometry from the gaussian output file.
 
         Returns:
-            List: List with the atom numbers of the atoms.
-            List: List with the cartesian coordinates of the atoms.
+            (tuple): tuple containing:
+            
+                atoms (list) : Atom numbers
+                coördinates (list): Cartesian coordinates in a 2D list
         """
         m = self._find_last_occurance("Standard orientation")
         m.readline()
