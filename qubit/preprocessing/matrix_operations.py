@@ -1,9 +1,9 @@
 import numpy as np
 import warnings
-    
-    """
-    This module is a support module for matrix operations.
-    """
+
+"""This module is a support module for matrix operations.
+"""
+
 
 def pad_matrix(matrix, size):
     """Applies padding to a matrix.

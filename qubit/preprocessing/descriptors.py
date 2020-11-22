@@ -6,6 +6,7 @@ import numpy as np
 that can be used in machine learning or deep learning.
 """
 
+
 def generate_coulomb_matrix(file):
     """Generates the coulomb matrix from an XYZ file.
 
@@ -34,12 +35,11 @@ def generate_coulomb_matrix(file):
                 cm[i][j] = 0.5 * z[i] ** 2.4
             elif i < j:
                 cm[i][j] = (
-                    z[i]
-                    * z[j]
-                    / (np.linalg.norm(np.array(xyz[i]) - np.array(xyz[j])))
+                    z[i] * z[j] / (np.linalg.norm(np.array(xyz[i]) - np.array(xyz[j])))
                 )
                 cm[j][i] = cm[i][j]
     return cm
+
 
 def randomize_coulomb_matrix(coulomb_matrix):
     """Randomizes the coulomb matrix.
@@ -51,9 +51,7 @@ def randomize_coulomb_matrix(coulomb_matrix):
         (2darray): The randomized coulomb matrix.
     """
     # calculate the row normals of a coulomb matrix
-    row_norms = np.array(
-        [np.linalg.norm(row) for row in coulomb_matrix], dtype=float
-    )
+    row_norms = np.array([np.linalg.norm(row) for row in coulomb_matrix], dtype=float)
 
     # draw random numbers from a normal distribution
     rand = np.random.RandomState()

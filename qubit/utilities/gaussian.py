@@ -5,6 +5,7 @@ import mmap
 It will allow the user to quickly write custom interfaces to analyse the output files.
 """
 
+
 class Extractor:
     """This class supports data extraction from gaussian output files.
     It provides functionality to extract all the implemented data at once or custom extraction
@@ -50,12 +51,12 @@ class Extractor:
 
     def extract_optimized_geometry(self):
         """Extracts the optimized geometry
-        
+
         Extracts the optimized geometry from the gaussian output file.
 
         Returns:
             (tuple): tuple containing:
-            
+
                 atoms (list) : Atom numbers
                 coördinates (list): Cartesian coordinates in a 2D list
         """

@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def load_xyz_from_file(file):
     """Loads XYZ data from file.
 
@@ -8,7 +9,7 @@ def load_xyz_from_file(file):
 
     Returns:
         (tuple): tuple containing:
-            
+
                 atoms (list) : Atom numbers
                 coördinates (list): Cartesian coordinates in a 2D list
     """
