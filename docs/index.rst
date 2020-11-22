@@ -1,5 +1,7 @@
 Qubit, your environment for chemical machine learning and deep learning.
 =======================================================================
+Qubit aims to provide a better work environment for chemical machine learning and deep learning.
+It will provide a wide range of tools from dataset construction to feature generation.
 
 .. toctree::
    :maxdepth: 2
@@ -7,6 +9,8 @@ Qubit, your environment for chemical machine learning and deep learning.
    
    installation.rst
    tutorial.rst
+   :ref:`genindex`
+   :ref:`modindex`
 
 .. automodule:: qubit
 .. automodule:: qubit.parsing.xyz
