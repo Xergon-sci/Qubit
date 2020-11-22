@@ -1,4 +1,4 @@
-from qubit.parsing.xyz import XYZ
+from qubit.parsing.xyz import load_xyz_from_file
 from qubit.data import atomnumber
 import numpy as np
 
@@ -18,8 +18,7 @@ def generate_coulomb_matrix(file):
     """
 
     # parse the input z-matrix
-    parser = XYZ()
-    atoms, xyz = parser.load_xyz_from_file(file)
+    atoms, xyz = load_xyz_from_file(file)
 
     # determine the lenght of the molecule and atomnumbers
     n = len(atoms)
