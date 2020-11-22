@@ -5,9 +5,9 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ main, nightly, development ]
+    branches: [ main, nightly ]
   pull_request:
-    branches: [ main, nightly, development ]
+    branches: [ main, nightly ]
 
 jobs:
   build:
