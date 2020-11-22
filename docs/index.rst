@@ -9,8 +9,6 @@ It will provide a wide range of tools from dataset construction to feature gener
    
    installation.rst
    tutorial.rst
-   :ref:`genindex`
-   :ref:`modindex`
 
 .. automodule:: qubit
 .. automodule:: qubit.parsing.xyz
