@@ -9,6 +9,10 @@ Qubit, your environment for chemical machine learning and deep learning.
    tutorial.rst
 
 .. automodule:: qubit
+.. automodule:: qubit.parsing
+   :members:
+.. automodule:: qubit.preprocessing
+   :members:
 .. automodule:: qubit.utilities.gaussian
    :members:
 
