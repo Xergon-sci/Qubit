@@ -11,12 +11,16 @@ Qubit, your environment for chemical machine learning and deep learning.
 .. automodule:: qubit
 .. automodule:: qubit.parsing.xyz
    :members:
+   :undoc-members:
 .. automodule:: qubit.preprocessing.descriptors
    :members:
+   :undoc-members:
 .. automodule:: qubit.preprocessing.matrix_operations
    :members:
+   :undoc-members:
 .. automodule:: qubit.utilities.gaussian
    :members:
+   :undoc-members:
 
 Indices and tables
 ==================
