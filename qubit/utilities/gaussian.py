@@ -5,7 +5,6 @@ import mmap
 It will allow the user to quickly write custom interfaces to analyse the output files.
 """
 
-
 class Extractor:
     """This class supports data extraction from gaussian output files.
     It provides functionality to extract all the implemented data at once or custom extraction
@@ -14,6 +13,8 @@ class Extractor:
 
     def __init__(self, filepath):
         self.filepath = filepath
+        self.normal_execution = None
+        self.negative_frequencies = None
 
     def _find_last_occurance(self, word):
         """Support function that finds the last occurance of a word in a file.
@@ -30,6 +31,30 @@ class Extractor:
         m.seek(i)
         return m
 
+    def _confirm_normal_execution(self):
+        """Confirms the normal execution of the current Gaussian file.
+
+        Raises:
+            AttributeError: Raises when no check for normal execution has occured.
+        """
+        if self.normal_execution is None:
+            raise AttributeError('This Gaussian file is not checked for normal execution, please check for this first by calling check_normal_execution().')
+
+    def _confirm_negative_frequencies(self):
+        """Cofirms there are no imaginary frequencies found on the current Gaussian file.
+
+        Raises:
+            AttributeError: [description]
+        """
+        if self.negative_frequencies is None:
+            raise AttributeError('This Gaussian file is not checked for negative (imaginary) frequencies, please check for this first by calling check_frequencies().')
+    
+    def _confirm_all(self):
+        """Bundlefunction that confirms all requirements.
+        """
+        self._confirm_normal_execution()
+        self._confirm_negative_frequencies()
+
     def check_normal_execution(self):
         """Checks for normal execution
 
@@ -45,9 +70,28 @@ class Extractor:
                 f.seek(-2, os.SEEK_CUR)
             line = f.readline().decode()
             if "Normal termination of Gaussian" in line:
+                self.normal_execution = True
                 return True
             else:
-                return False
+                self.normal_execution = False
+                raise Exception('This Gaussian file has no normal execution. Fix these errors first in Gaussian.')
+    
+    def check_frequencies(self):
+        """Check for negative (imaginary) frequencies.
+
+        Raises:
+            Exception: Raises when negative frequencies are found.
+        """
+        self._confirm_normal_execution()
+        m = self._find_last_occurance('Frequencies --')
+        split = m.readline().split()
+        
+        for i in range(2,5):
+            x = float(bytes.decode(split[i]))
+            if x < 0:
+                raise Exception('Negative frequency found. Manual revision is advised.')
+        self.negative_frequencies = False
+        return False
 
     def extract_optimized_geometry(self):
         """Extracts the optimized geometry
@@ -60,7 +104,8 @@ class Extractor:
                 atoms (list) : Atom numbers
                 coördinates (list): Cartesian coordinates in a 2D list
         """
-        m = self._find_last_occurance("Standard orientation")
+        self._confirm_all()
+        m = self._find_last_occurance('Standard orientation')
         m.readline()
         m.readline()
         m.readline()
@@ -88,17 +133,10 @@ class Extractor:
                 xyz.append(coords)
         return atoms, xyz
 
-    def extract_HOMO_energy():
+    def extract_HOMO_energy(self):
+        self._confirm_all()
         NotImplemented
 
-    def extract_LUMO_energy():
+    def extract_LUMO_energy(self):
+        self._confirm_all()
         NotImplemented
-
-    def extract(self):
-        # check normal termination
-        if not self.check_normal_execution():
-            raise ValueError(
-                "Gaussian did not terminate normal. In: {}".format(self.filepath)
-            )
-
-        # extract gaussian data
