@@ -15,6 +15,7 @@ class Extractor:
         self.filepath = filepath
         self.normal_execution = None
         self.negative_frequencies = None
+        self.convergence = None
 
     def _find_last_occurance(self, word):
         """Support function that finds the last occurance of a word in a file.
@@ -44,11 +45,20 @@ class Extractor:
         """Cofirms there are no imaginary frequencies found on the current Gaussian file.
 
         Raises:
-            AttributeError: [description]
+            AttributeError: Raises when no check for negative (imaginary) frequencies has occured.
         """
         if self.negative_frequencies is None:
             raise AttributeError('This Gaussian file is not checked for negative (imaginary) frequencies, please check for this first by calling check_frequencies().')
     
+    def _confirm_convergence(self):
+        """Cofirms there is convergence in the current Gaussian file.
+
+        Raises:
+            AttributeError: Raises when no check for convergence has occured.
+        """
+        if self.convergence is None:
+            raise AttributeError('This Gaussian file is not checked for convergence, please check for this first by calling check_convergence().')
+
     def _confirm_all(self):
         """Bundlefunction that confirms all requirements.
         """
@@ -78,6 +88,9 @@ class Extractor:
     
     def check_frequencies(self):
         """Check for negative (imaginary) frequencies.
+        
+        Returns:
+            (bool): Returns False if no negative frequencies are found.
 
         Raises:
             Exception: Raises when negative frequencies are found.
@@ -92,6 +105,23 @@ class Extractor:
                 raise Exception('Negative frequency found. Manual revision is advised.')
         self.negative_frequencies = False
         return False
+
+    def check_convergence(self):
+        """Check for convergence errors.
+
+        Returns:
+            (bool): Returns True if convergence is reached.
+        """
+        self._confirm_normal_execution()
+        self._confirm_negative_frequencies()
+        try:
+            self._find_last_occurance('Convergence criterion not met.')
+        except ValueError as error:
+            self.convergence = True
+        else:
+            self.convergence = False
+            raise Exception('The convergence criterion of this Gaussian file are not met.')
+        return self.convergence
 
     def extract_optimized_geometry(self):
         """Extracts the optimized geometry
