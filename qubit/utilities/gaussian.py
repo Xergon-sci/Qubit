@@ -116,7 +116,7 @@ class Extractor:
         self._confirm_negative_frequencies()
         try:
             self._find_last_occurance('Convergence criterion not met.')
-        except ValueError as error:
+        except ValueError:
             self.convergence = True
         else:
             self.convergence = False
@@ -162,6 +162,18 @@ class Extractor:
                 coords.append(split[5])
                 xyz.append(coords)
         return atoms, xyz
+
+    def extract_SCF(self):
+        import re
+        self._confirm_all()
+        with open(self.filepath, "r") as f:
+            m = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
+
+        [print(s) for s in re.finditer(b'Proceeding to internal job step number', m)]
+
+        # Determine all links and find line numbers
+        # Find all SCF Done's, above each link statement
+
 
     def extract_HOMO_energy(self):
         self._confirm_all()
