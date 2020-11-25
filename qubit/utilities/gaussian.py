@@ -169,10 +169,14 @@ class Extractor:
         with open(self.filepath, "r") as f:
             m = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
 
-        [print(s) for s in re.finditer(b'Proceeding to internal job step number', m)]
-
-        # Determine all links and find line numbers
-        # Find all SCF Done's, above each link statement
+        # Determine all links and find the locations in bytes
+        prev = 0
+        for match in re.finditer(b'Proceeding to internal job step number', m):
+            n = m.rfind(b'SCF Done', prev, match.start())
+            prev = match.start()
+            m.seek(n)
+            l = bytes.decode(m.readline())
+            print(l)
 
 
     def extract_HOMO_energy(self):
