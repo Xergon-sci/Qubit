@@ -1,8 +1,5 @@
 from qubit.utilities.gaussian import Extractor
 
-ex = Extractor('/data/brussel/102/vsc10255/qubit/tests/test_data/JID_0.log')
-
-ex.check_normal_execution()
-ex.check_frequencies()
-ex.check_convergence()
-ex.extract_SCF()
+labels = ['neutraal', 'Energie_neutraal', 'Energie_kation', 'Energie_anion']
+ex = Extractor('/data/brussel/102/vsc10255/qubit/tests/test_data/JID_0.log', labels=labels)
+print(ex.extract_SCF())

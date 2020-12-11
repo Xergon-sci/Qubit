@@ -1,5 +1,6 @@
 import os
 import mmap
+import re
 
 """This submodule aims to provide utilities for the gaussian software package.
 It will allow the user to quickly write custom interfaces to analyse the output files.
@@ -11,59 +12,15 @@ class Extractor:
     can be set up by using its public methods.
     """
 
-    def __init__(self, filepath):
+    def __init__(self, filepath, labels=None):
         self.filepath = filepath
-        self.normal_execution = None
-        self.negative_frequencies = None
-        self.convergence = None
+        self.labels = labels
+        self.normal_executions = 0
 
-    def _find_last_occurance(self, word):
-        """Support function that finds the last occurance of a word in a file.
-
-        Args:
-            word (str): Word to search for in the file.
-
-        Returns:
-            mmap: Returns mmap located at the line the last occurance of {word} is at.
-        """
-        with open(self.filepath, "r") as f:
-            m = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-        i = m.rfind(str.encode(word))
-        m.seek(i)
-        return m
-
-    def _confirm_normal_execution(self):
-        """Confirms the normal execution of the current Gaussian file.
-
-        Raises:
-            AttributeError: Raises when no check for normal execution has occured.
-        """
-        if self.normal_execution is None:
-            raise AttributeError('This Gaussian file is not checked for normal execution, please check for this first by calling check_normal_execution().')
-
-    def _confirm_negative_frequencies(self):
-        """Cofirms there are no imaginary frequencies found on the current Gaussian file.
-
-        Raises:
-            AttributeError: Raises when no check for negative (imaginary) frequencies has occured.
-        """
-        if self.negative_frequencies is None:
-            raise AttributeError('This Gaussian file is not checked for negative (imaginary) frequencies, please check for this first by calling check_frequencies().')
-    
-    def _confirm_convergence(self):
-        """Cofirms there is convergence in the current Gaussian file.
-
-        Raises:
-            AttributeError: Raises when no check for convergence has occured.
-        """
-        if self.convergence is None:
-            raise AttributeError('This Gaussian file is not checked for convergence, please check for this first by calling check_convergence().')
-
-    def _confirm_all(self):
-        """Bundlefunction that confirms all requirements.
-        """
-        self._confirm_normal_execution()
-        self._confirm_negative_frequencies()
+        # Initialize
+        self.check_normal_execution()
+        self.check_frequencies()
+        self.label_positions = self._get_label_positions()
 
     def check_normal_execution(self):
         """Checks for normal execution
@@ -74,80 +31,82 @@ class Extractor:
         Returns:
             (bool): Returns True when a calculation has normal execution.
         """
-        with open(self.filepath, "rb") as f:
-            f.seek(-2, os.SEEK_END)
-            while f.read(1) != b"\n":
-                f.seek(-2, os.SEEK_CUR)
-            line = f.readline().decode()
-            if "Normal termination of Gaussian" in line:
-                self.normal_execution = True
+        with open(self.filepath, "r") as f:
+            for line in f:
+                if 'Normal termination of Gaussian' in line:
+                    self.normal_executions += 1
+        if self.labels != None:
+            if self.normal_executions == len(self.labels)+1:
                 return True
             else:
-                self.normal_execution = False
-                raise Exception('This Gaussian file has no normal execution. Fix these errors first in Gaussian.')
+                raise Exception('There are {} Normal terminations, please check this file manually: {}'.format(self.normal_executions, self.filepath))
+        else:
+            if self.normal_executions == 0:
+                raise Exception('There are no normal terminations, please check this file manually: {}'.format(self.filepath))
+            elif self.normal_executions == 1:
+                return True
+            else:
+                raise Exception('There are multiple normal terminations, please set the labels when constructing the flagg.')
     
     def check_frequencies(self):
         """Check for negative (imaginary) frequencies.
         
         Returns:
-            (bool): Returns False if no negative frequencies are found.
+            (bool): Returns True if no negative frequencies are found.
 
         Raises:
             Exception: Raises when negative frequencies are found.
         """
-        self._confirm_normal_execution()
-        m = self._find_last_occurance('Frequencies --')
-        split = m.readline().split()
+        with open(self.filepath, 'r') as f:
+            imag = False
+            for line in f:
+                if 'Frequencies -- ' in line:
+                    split = line.split()
+                    if float(split[2]) < 0:
+                        imag = True
+                    if float(split[3]) < 0:
+                        imag = True
+                    if float(split[4]) < 0:
+                        imag = True
         
-        for i in range(2,5):
-            x = float(bytes.decode(split[i]))
-            if x < 0:
-                raise Exception('Negative frequency found. Manual revision is advised.')
-        self.negative_frequencies = False
-        return False
-
-    def check_convergence(self):
-        """Check for convergence errors.
-
-        Returns:
-            (bool): Returns True if convergence is reached.
-        """
-        self._confirm_normal_execution()
-        self._confirm_negative_frequencies()
-        try:
-            self._find_last_occurance('Convergence criterion not met.')
-        except ValueError:
-            self.convergence = True
+        if imag:
+            raise Exception('There are imaginary frequencies, please check this file manually: {}'.format(self.filepath))
         else:
-            self.convergence = False
-            raise Exception('The convergence criterion of this Gaussian file are not met.')
-        return self.convergence
+            return True
 
-    def extract_optimized_geometry(self):
-        """Extracts the optimized geometry
+    def _get_label_positions(self):
+        results = []
+        with open(self.filepath, 'r') as f:
+            for i, line in enumerate(f):
+                for l in self.labels:
+                    if l in line:
+                        results.append([i, l])
+        
+        for i, n in enumerate(results):
+            if n[0] == results[i-1][0]:
+                results.remove(results[i-1])
+        
+        def clean_list():
+            for i, n in enumerate(results):
+                if n[1] == results[i-1][1]:
+                    results.remove(results[i-1])
+                    clean_list()
+        clean_list()
+        return results
 
-        Extracts the optimized geometry from the gaussian output file.
-
-        Returns:
-            (tuple): tuple containing:
-
-                atoms (list) : Atom numbers
-                coördinates (list): Cartesian coordinates in a 2D list
-        """
-        self._confirm_all()
-        m = self._find_last_occurance('Standard orientation')
-        m.readline()
-        m.readline()
-        m.readline()
-        m.readline()
-        m.readline()
+    def _extract_geometry(self, file):
+        file.readline()
+        file.readline()
+        file.readline()
+        file.readline()
+        file.readline()
 
         atoms = []
         xyz = []
         is_molecule = True
         while is_molecule:
             # read and process the line
-            line = bytes.decode(m.readline())
+            line = file.readline()
             split = line.split()
 
             # check if is still the molecule
@@ -163,26 +122,47 @@ class Extractor:
                 xyz.append(coords)
         return atoms, xyz
 
+    def extract_optimized_geometry(self):
+        """Extracts the optimized geometry
+
+        Extracts the optimized geometry from the gaussian output file.
+
+        Returns:
+            (tuple): tuple containing:
+
+                atoms (list) : Atom numbers
+                coördinates (list): Cartesian coordinates in a 2D list
+        """
+        results = []
+        with open(self.filepath, 'r') as f:
+            for line in f:
+                if 'Standard orientation' in line:
+                    atoms, xyz = self._extract_geometry(f)
+                    results.append([atoms, xyz])
+                if self.labels[1] in line:
+                    break
+        return results[-2]
+
     def extract_SCF(self):
-        import re
-        self._confirm_all()
-        with open(self.filepath, "r") as f:
-            m = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-
-        # Determine all links and find the locations in bytes
-        prev = 0
-        for match in re.finditer(b'Proceeding to internal job step number', m):
-            n = m.rfind(b'SCF Done', prev, match.start())
-            prev = match.start()
-            m.seek(n)
-            l = bytes.decode(m.readline())
-            print(l)
-
+        vals = []
+        results = []
+        with open(self.filepath, 'r') as f:
+            for i, line in enumerate(f):
+                if 'SCF Done' in line:
+                    split = line.split()
+                    vals.append([i, split[4]])
+                    
+        for p in self._get_label_positions():
+            temp = None
+            for v in vals:
+                if v[0] < p[0]:
+                    temp = v
+            temp = [p[1], temp[1]]
+            results.append(temp)    
+        return results
 
     def extract_HOMO_energy(self):
-        self._confirm_all()
         NotImplemented
 
     def extract_LUMO_energy(self):
-        self._confirm_all()
         NotImplemented

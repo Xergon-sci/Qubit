@@ -7,8 +7,11 @@ that can be used in machine learning or deep learning.
 """
 
 
-def generate_coulomb_matrix(file):
-    """Generates the coulomb matrix from an XYZ file.
+def generate_coulomb_matrix(atoms, xyz):
+    """Generates the coulomb matrix from an atoms and xyz matrix.
+
+    Generates the coulomb matrix from an atoms and xyz matrix. Can be loaded in by using load_xyz_from_file().
+    convert atoms symbols to numbers with z = [atomnumber[atom] for atom in atoms]
 
     Args:
         file (path): Path to the xyz file.
@@ -16,13 +19,9 @@ def generate_coulomb_matrix(file):
     Returns:
         (2darray): 2 dimensional array containing the coulomb matrix.
     """
-
-    # parse the input z-matrix
-    atoms, xyz = load_xyz_from_file(file)
-
     # determine the lenght of the molecule and atomnumbers
     n = len(atoms)
-    z = [atomnumber[atom] for atom in atoms]
+    z = atoms
 
     # create an empty matrix
     cm = np.zeros((n, n))
