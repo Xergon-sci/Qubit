@@ -1,6 +1,6 @@
-from qubit.parsing.xyz import load_xyz_from_file
 from qubit.data import atomnumber
 import numpy as np
+import math
 
 """This module provides functionality to generate usefull molcular descriptors
 that can be used in machine learning or deep learning.
@@ -60,3 +60,36 @@ def randomize_coulomb_matrix(coulomb_matrix):
 
     # Permute row wise then coulomn wise
     return coulomb_matrix[p][:, p]
+
+def tensorise_coulomb_matrix(coulomb_matrix, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
+    tensor = []
+
+    # generate negative layers
+    for i in range(negative_dimensions):
+        layer = []
+        for y in coulomb_matrix:
+            row = []
+            for x in y:
+                row.append((1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)))
+            layer.append(row)
+        tensor.append(layer)
+    
+    # generate base layer
+    layer = []
+    for y in coulomb_matrix:
+        row = []
+        for x in y:
+            row.append((1/2)+((1/2)*math.tanh((x/phi)*slope)))
+        layer.append(row)
+    tensor.append(layer)
+
+    # generate negapositive layers
+    for i in range(positive_dimension):
+        layer = []
+        for y in coulomb_matrix:
+            row = []
+            for x in y:
+                row.append((1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)))
+            layer.append(row)
+        tensor.append(layer)
+    return tensor
