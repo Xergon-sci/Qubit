@@ -81,7 +81,7 @@ def tensorise_coulomb_matrix(coulomb_matrix, phi=1, slope=0.7, negative_dimensio
     tensors.append(tensor)
 
     # generate negapositive layers
-    for i in range(negative_dimensions):
+    for i in range(positive_dimension):
         tensor = np.empty([cm.shape[0],cm.shape[1]])
         for iy,y in enumerate(coulomb_matrix):
             for ix,x in enumerate(y):
