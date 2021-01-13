@@ -62,34 +62,29 @@ def randomize_coulomb_matrix(coulomb_matrix):
     return coulomb_matrix[p][:, p]
 
 def tensorise_coulomb_matrix(coulomb_matrix, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
-    tensor = []
+    tensors = []
+    cm = np.array(coulomb_matrix)
 
     # generate negative layers
     for i in range(negative_dimensions):
-        layer = []
-        for y in coulomb_matrix:
-            row = []
-            for x in y:
-                row.append((1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)))
-            layer.append(row)
-        tensor.append(layer)
+        tensor = np.empty([cm.shape[0],cm.shape[1]])
+        for iy,y in enumerate(coulomb_matrix):
+            for ix,x in enumerate(y):
+                tensor[ix,iy] = (1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope))
+        tensors.append(tensor)
     
     # generate base layer
-    layer = []
-    for y in coulomb_matrix:
-        row = []
-        for x in y:
-            row.append((1/2)+((1/2)*math.tanh((x/phi)*slope)))
-        layer.append(row)
-    tensor.append(layer)
+    tensor = np.empty([cm.shape[0],cm.shape[1]])
+    for iy,y in enumerate(coulomb_matrix):
+        for ix,x in enumerate(y):
+            tensor[ix,iy] = (1/2)+((1/2)*math.tanh((x/phi)*slope))
+    tensors.append(tensor)
 
     # generate negapositive layers
-    for i in range(positive_dimension):
-        layer = []
-        for y in coulomb_matrix:
-            row = []
-            for x in y:
-                row.append((1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)))
-            layer.append(row)
-        tensor.append(layer)
-    return tensor
+    for i in range(negative_dimensions):
+        tensor = np.empty([cm.shape[0],cm.shape[1]])
+        for iy,y in enumerate(coulomb_matrix):
+            for ix,x in enumerate(y):
+                tensor[ix,iy] = (1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope))
+        tensors.append(tensor)
+    return np.array(tensors)
