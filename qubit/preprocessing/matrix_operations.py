@@ -14,12 +14,15 @@ def pad_matrix(matrix, size):
     Example: Can be used to pad the Coulomb Matrix.
 
     Args:
-        matrix (2D list): Matrix to pad in a nested list format.
+        matrix (2D np.array): Matrix to pad in a nested list format.
         size (int): The size to scale the matrix to.
 
     Returns:
         ndarray: The padded matrix.
     """
+    if isinstance(matrix, list):
+        matrix = np.array(list)
+
     # calculate the wished size
     size = size - matrix.shape[0]
 
