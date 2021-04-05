@@ -22,6 +22,7 @@ def generate_coulomb_matrix(atoms, xyz):
     # determine the lenght of the molecule and atomnumbers
     n = len(atoms)
     z = atoms
+    print(z[0])
 
     # create an empty matrix
     cm = np.zeros((n, n))
@@ -88,3 +89,28 @@ def tensorise_coulomb_matrix(coulomb_matrix, phi=1, slope=0.7, negative_dimensio
                 tensor[ix,iy] = (1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope))
         tensors.append(tensor)
     return np.array(tensors)
+
+def generate_coulomb_vectors(atoms, xyz):
+
+    # determine the lenght of the molecule and atomnumbers
+    n = len(atoms)
+
+    if type(atoms[0]) == str:
+    z = [atomnumber[atom] for atom in atoms]
+    else:
+        z = atoms
+
+    # create an empty matrix
+    cm = np.zeros((n, n))
+
+    # calculate the values, populate the array and return the coulomb matrix
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                cm[i][j] = 0.5 * z[i] ** 2.4
+            elif i < j:
+                cm[i][j] = (
+                    z[i] * z[j] / (np.linalg.norm(np.array(xyz[i]) - np.array(xyz[j])))
+                )
+                cm[j][i] = cm[i][j]
+    return cm
