@@ -8,12 +8,12 @@ class Parser():
     def load():
         """Not Implemented
         """
-        NotImplemented
+        NotImplementedError
 
     def write():
         """Not Implemented
         """
-        NotImplemented
+        NotImplementedError
 
 class XYZ:
     """Parser for parsing XYZ files.

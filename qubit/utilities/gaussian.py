@@ -4,6 +4,7 @@ import os
 It will allow the user to quickly write custom interfaces to analyse the output files.
 """
 
+
 class Extractor:
     """This class supports data extraction from gaussian output files.
     It provides functionality to extract all the implemented data at once or custom extraction
@@ -37,18 +38,21 @@ class Extractor:
             if self.normal_executions == len(self.labels)+1:
                 return True
             else:
-                raise Exception('There are {} Normal terminations, please check this file manually: {}'.format(self.normal_executions, self.filepath))
+                raise Exception('There are {} Normal terminations, please check this file manually: {}'.format(
+                    self.normal_executions, self.filepath))
         else:
             if self.normal_executions == 0:
-                raise Exception('There are no normal terminations, please check this file manually: {}'.format(self.filepath))
+                raise Exception(
+                    'There are no normal terminations, please check this file manually: {}'.format(self.filepath))
             elif self.normal_executions == 1:
                 return True
             else:
-                raise Exception('There are multiple normal terminations, please set the labels when constructing the flagg.')
-    
+                raise Exception(
+                    'There are multiple normal terminations, please set the labels when constructing the flagg.')
+
     def check_frequencies(self):
         """Check for negative (imaginary) frequencies.
-        
+
         Returns:
             (bool): Returns True if no negative frequencies are found.
 
@@ -68,9 +72,10 @@ class Extractor:
                 imag = True
             if float(split[4]) < 0:
                 imag = True
-        
+
         if imag:
-            raise Exception('There are imaginary frequencies, please check this file manually: {}'.format(self.filepath))
+            raise Exception(
+                'There are imaginary frequencies, please check this file manually: {}'.format(self.filepath))
         else:
             return True
 
@@ -81,11 +86,11 @@ class Extractor:
                 for l in self.labels:
                     if l in line:
                         results.append([i, l])
-        
+
         for i, n in enumerate(results):
             if n[0] == results[i-1][0]:
                 results.remove(results[i-1])
-        
+
         def clean_list():
             for i, n in enumerate(results):
                 if n[1] == results[i-1][1]:
@@ -166,7 +171,7 @@ class Extractor:
                 if v[0] < p[0]:
                     temp = v
             temp = [p[1], temp[1]]
-            results.append(temp)    
+            results.append(temp)
         return results
 
     def extract_HOMO_energy(self):
@@ -178,13 +183,12 @@ class Extractor:
                     inFreq = True
                 if self.labels[1] in line:
                     inFreq = False
-                
+
                 if inFreq:
                     if 'Alpha  occ. eigenvalues' in line:
                         vals.append(line)
         split = vals[-1].split()
         return split[-1]
-
 
     def extract_LUMO_energy(self):
         with open(self.filepath, 'r') as f:
@@ -195,41 +199,41 @@ class Extractor:
                     inFreq = True
                 if self.labels[1] in line:
                     inFreq = False
-                
+
                 if inFreq:
                     if 'Alpha virt. eigenvalues' in line:
                         vals.append(line)
         split = vals[0].split()
         return split[4]
-    
+
     def extract_zero_point_correction(self):
         with open(self.filepath, 'r') as f:
             for line in f:
                 if 'Zero-point correction' in line:
                     split = line.split()
                     return split[2]
-    
+
     def extract_thermal_correction_to_energy(self):
         with open(self.filepath, 'r') as f:
             for line in f:
                 if 'Thermal correction to Energy' in line:
                     split = line.split()
                     return split[4]
-    
+
     def extract_thermal_correction_to_enthalpy(self):
         with open(self.filepath, 'r') as f:
             for line in f:
                 if 'Thermal correction to Enthalpy' in line:
                     split = line.split()
                     return split[4]
-    
+
     def extract_thermal_correction_to_gibbs_free_energy(self):
         with open(self.filepath, 'r') as f:
             for line in f:
                 if 'Thermal correction to Gibbs Free Energy' in line:
                     split = line.split()
                     return split[6]
-    
+
     def _extract_npa(self, file):
         file.readline()
         file.readline()
@@ -256,7 +260,7 @@ class Extractor:
             for line in f:
                 if 'Summary of Natural Population Analysis:' in line:
                     vals.append(self._extract_npa(f))
-                
+
             results.append(vals[0])
             results.append(vals[1])
             results.append(vals[4])
