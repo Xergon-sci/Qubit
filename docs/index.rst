@@ -1,16 +1,24 @@
-.. Qubit documentation master file, created by
-   sphinx-quickstart on Sat Nov 21 12:19:20 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to Qubit's documentation!
-=================================
+Qubit, your environment for chemical machine learning and deep learning.
+=======================================================================
+Qubit aims to provide a better work environment for chemical machine learning and deep learning.
+It will provide a wide range of tools from dataset construction to feature generation.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   installation.rst
+   tutorial.rst
 
-
+.. automodule:: qubit
+.. automodule:: qubit.parsing
+   :members:
+.. automodule:: qubit.preprocessing.descriptors
+   :members:
+.. automodule:: qubit.preprocessing.matrix_operations
+   :members:
+.. automodule:: qubit.utilities.gaussian
+   :members:
 
 Indices and tables
 ==================

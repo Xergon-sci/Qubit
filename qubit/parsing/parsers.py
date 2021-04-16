@@ -1,11 +1,20 @@
-import numpy as np
+class XYZ():
+    '''
+    test docstring
+    '''
 
+    def load(self, file):
+        """Loads XYZ data from file.
 
-class XYZ:
-    def __init__(self):
-        pass
+        Args:
+            file (filepath): Path to the file to load.
 
-    def load_xyz_from_file(self, file):
+        Returns:
+            (tuple): tuple containing:
+
+                    atoms (list) : Atom numbers
+                    coördinates (list): Cartesian coordinates in a 2D list
+        """
         atoms = []
         coordinates = []
         with open(file, "r") as matrix:

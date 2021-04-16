@@ -11,7 +11,7 @@ setuptools.setup(
     description="Cheminformatics package for use with machine learning.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Xergon-sci/qubit",
+    url="https://github.com/Xergon-sci/Qubit",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
