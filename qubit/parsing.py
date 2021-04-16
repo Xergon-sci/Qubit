@@ -2,9 +2,6 @@ class Parser():
     """Parent class for all parsers.
     """
 
-    def __init__(self):
-        pass
-
     def load():
         """Not Implemented
         """
@@ -18,10 +15,7 @@ class Parser():
 class XYZ:
     """Parser for parsing XYZ files.
     """
-
-    def __init__(self):
-        pass
-
+    
     def load(self, file):
         """Load the molecule from an XYZ file.
 
