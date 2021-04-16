@@ -21,7 +21,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'Qubit'
-copyright = '2020, Michiel Jacobs'
+copyright = '2021, Michiel Jacobs'
 author = 'Michiel Jacobs'
 
 # The short X.Y version

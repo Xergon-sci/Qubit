@@ -22,7 +22,12 @@ def generate_coulomb_matrix(atoms, xyz):
     # determine the lenght of the molecule and atomnumbers
     n = len(atoms)
     z = atoms
-    print(z[0])
+
+    if type(atoms[0]) == str:
+        z = [atomnumber[atom] for atom in atoms]
+    else:
+        z = atoms
+
 
     # create an empty matrix
     cm = np.zeros((n, n))
@@ -96,7 +101,7 @@ def generate_coulomb_vectors(atoms, xyz):
     n = len(atoms)
 
     if type(atoms[0]) == str:
-    z = [atomnumber[atom] for atom in atoms]
+        z = [atomnumber[atom] for atom in atoms]
     else:
         z = atoms
 
