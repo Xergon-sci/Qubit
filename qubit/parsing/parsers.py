@@ -1,19 +1,35 @@
-class XYZ():
-    '''
-    test docstring
-    '''
+class Parser():
+    """Parent class for all parsers.
+    """
+
+    def __init__(self):
+        pass
+
+    def load():
+        """Not Implemented
+        """
+        NotImplemented
+
+    def write():
+        """Not Implemented
+        """
+        NotImplemented
+
+class XYZ:
+    """Parser for parsing XYZ files.
+    """
+
+    def __init__(self):
+        pass
 
     def load(self, file):
-        """Loads XYZ data from file.
+        """Load the molecule from an XYZ file.
 
         Args:
-            file (filepath): Path to the file to load.
+            file (string): Name of the file or path to were it is located.
 
         Returns:
-            (tuple): tuple containing:
-
-                    atoms (list) : Atom numbers
-                    coördinates (list): Cartesian coordinates in a 2D list
+            (list, list): Returns a list of atoms and a 2D list of coordinates.
         """
         atoms = []
         coordinates = []
@@ -25,7 +41,7 @@ class XYZ():
                 # the first line contains typically the atom count
                 if line == 0:
                     continue
-                # the second line is empty
+                # the second line is empty or contains a title
                 elif line == 1:
                     continue
                 else:

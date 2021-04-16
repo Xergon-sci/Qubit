@@ -11,7 +11,7 @@ It will provide a wide range of tools from dataset construction to feature gener
    tutorial.rst
 
 .. automodule:: qubit
-.. automodule:: qubit.parsing
+.. automodule:: qubit.parsing.parsers
    :members:
 .. automodule:: qubit.preprocessing.descriptors
    :members:
