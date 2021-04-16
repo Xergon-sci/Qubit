@@ -7,7 +7,7 @@ setuptools.setup(
     name="Qubit",
     version="0.0.1",
     author="Michiel Jacobs",
-    author_email="jacobs.michiel@icloud.com",
+    author_email="michiel.jacobs@vub.be",
     description="Cheminformatics package for use with machine learning.",
     long_description=long_description,
     long_description_content_type="text/markdown",
