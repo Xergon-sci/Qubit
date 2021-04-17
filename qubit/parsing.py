@@ -1,18 +1,18 @@
-class Parser():
+class Parser:
     """Parent class for all parsers.
     """
 
-    def load():
+    def load(self):
         """Not Implemented
         """
-        NotImplementedError
+        raise NotImplementedError
 
-    def write():
+    def write(self):
         """Not Implemented
         """
-        NotImplementedError
+        raise NotImplementedError
 
-class XYZ:
+class XYZ(Parser):
     """Parser for parsing XYZ files.
     """
     
