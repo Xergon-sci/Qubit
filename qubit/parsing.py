@@ -3,12 +3,18 @@ class Parser:
     """
 
     def load(self):
-        """Not Implemented
+        """Placeholder
+
+        Raises:
+            NotImplementedError
         """
         raise NotImplementedError
 
     def write(self):
-        """Not Implemented
+        """Placeholder
+
+        Raises:
+            NotImplementedError
         """
         raise NotImplementedError
 

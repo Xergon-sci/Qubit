@@ -9,9 +9,20 @@ class Descriptor:
     """
     
     def generate(self):
-        """Not Implemented
+        """Placeholder
+
+        Raises:
+            NotImplementedError
         """
-        NotImplementedError
+        raise NotImplementedError
+    
+    def normalize(self):
+        """Placeholder
+
+        Raises:
+            NotImplementedError
+        """
+        raise NotImplementedError
 
 
 class CoulombMatrix(Descriptor):
