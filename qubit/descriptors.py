@@ -7,10 +7,7 @@ from qubit.data import atomnumber
 class Descriptor:
     """Parent class for all descriptors
     """
-
-    def __init__(self):
-        pass
-
+    
     def generate(self):
         """Not Implemented
         """
