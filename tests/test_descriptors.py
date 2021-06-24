@@ -25,23 +25,23 @@ xyz = [
     [-0.513360, 0.889165, -0.363000]]
 
 @pytest.fixture
-def coulomb_matrix():
+def coulombMatrix():
     return CoulombMatrix()
 
-def test_coulomb_matrix(coulomb_matrix):
-    cm = coulomb_matrix.generate(atoms, xyz)
+def test_coulomb_matrix(coulombMatrix):
+    cm = coulombMatrix.generate(atoms, xyz)
     assert cm.size != 0
 
-def test_coulomb_matrix_randomize(coulomb_matrix):
-    cm = coulomb_matrix.generate(atoms, xyz, randomize=True)
+def test_coulomb_matrix_randomize(coulombMatrix):
+    cm = coulombMatrix.generate(atoms, xyz, randomize=True)
     assert cm.size != 0
 
-def test_randomize_coulomb_matrix(coulomb_matrix):
-    cm = coulomb_matrix.normalize(np.random.rand(5,5))
+def test_randomize_coulomb_matrix(coulombMatrix):
+    cm = coulombMatrix.normalize(np.random.rand(5,5))
     assert cm.size != 0
 
-def test_pad_matrix(coulomb_matrix):
+def test_pad_matrix(coulombMatrix):
     pass
 
-def test_normalize(coulomb_matrix):
+def test_normalize(coulombMatrix):
     pass
