@@ -55,7 +55,6 @@ class CoulombMatrix(Descriptor):
         """
         # determine the lenght of the molecule and atomnumbers
         n = len(atoms)
-        z = atoms
 
         if type(atoms[0]) == str:
             z = [atomnumber[atom] for atom in atoms]
@@ -82,7 +81,7 @@ class CoulombMatrix(Descriptor):
         else:
             return cm
 
-    def randomize(self, coulomb_matrix):
+    def randomize(coulomb_matrix):
         """Randomizes the Coulomb Matrix as described in (1).
 
         (1) Montavon, G.; Hansen, K.; Fazli, S.; Rupp, M.; Biegler, F.; Ziehe, A.;
