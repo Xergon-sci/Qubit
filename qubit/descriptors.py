@@ -111,7 +111,7 @@ class CoulombMatrix(Descriptor):
         # Permute row wise then coulomn wise
         return coulomb_matrix[p][:, p]
 
-    def pad_matrix(self, matrix, size):
+    def pad_matrix(matrix, size):
         """Applies padding to a matrix.
 
         You can use this function to scale a matrix to a given size.
