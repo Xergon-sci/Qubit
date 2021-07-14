@@ -2,6 +2,7 @@ import warnings
 import math
 import numpy as np
 from qubit.data import atomnumber
+import random
 
 
 class Descriptor:
@@ -24,6 +25,10 @@ class Descriptor:
         """
         raise NotImplementedError
 
+class CoulombVector(Descriptor):
+    def randomize(coulomb_vector):
+        random.shuffle(coulomb_vector)
+        return coulomb_vector
 
 class CoulombMatrix(Descriptor):
     """Provides functionality to generate the Coulomb Matrix (1).
