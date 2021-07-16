@@ -55,6 +55,26 @@ class CoulombVector(Descriptor):
                 tensor[i] = (1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope))
             tensors.append(tensor)
         return np.array(tensors)
+    
+    def pad_vector(vector, size):
+        
+        if isinstance(vector, list):
+            vector = np.asarray(vector)
+            
+        # calculate the wished size
+        size = size - vector.size
+        
+        # confirm the size isn't less than the default matrix size
+        if size <= 0:
+            m = vector
+            warnings.warn(
+                "Trying to reduce the matrix size, default matrix size has been returned!",
+                Warning,
+            )
+        else:
+            # pad the matrix
+            m = np.pad(vector, (0, size))
+        return m
 
 class CoulombMatrix(Descriptor):
     """Provides functionality to generate the Coulomb Matrix (1).

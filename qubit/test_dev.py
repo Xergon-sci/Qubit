@@ -14,5 +14,5 @@ vector = [  36.8581051994, 23.8539121677, 14.2474234001, 9.4214666604, 8.3166355
 
 cv = CoulombVector()
 
-x = cv.normalize(vector, negative_dimensions=5)
+x = CoulombVector.pad_vector(vector, size=40)
 print(x)
