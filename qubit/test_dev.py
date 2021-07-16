@@ -12,5 +12,7 @@ vector = [  36.8581051994, 23.8539121677, 14.2474234001, 9.4214666604, 8.3166355
             0.7245679751, 0.7287974701, 0.8580440233
     ]
 
-x = CoulombVector.randomize(vector)
+cv = CoulombVector()
+
+x = cv.normalize(vector, negative_dimensions=5)
 print(x)
