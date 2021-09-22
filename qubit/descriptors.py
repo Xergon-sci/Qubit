@@ -39,20 +39,20 @@ class CoulombVector(Descriptor):
         for i in range(negative_dimensions):
             tensor = np.empty(len(cv))
             for i, x in enumerate(coulomb_vector):
-                tensor[i] = (1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope))
+                tensor[i] = round((1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)))
             tensors.append(tensor)
 
         # generate base layer
         tensor = np.empty(len(cv))
         for i, x in enumerate(coulomb_vector):
-            tensor[i] = (1/2)+((1/2)*math.tanh((x/phi)*slope))
+            tensor[i] = round((1/2)+((1/2)*math.tanh((x/phi)*slope)))
         tensors.append(tensor)
 
         # generate negapositive layers
         for i in range(positive_dimension):
             tensor = np.empty(len(cv))
             for i, x in enumerate(coulomb_vector):
-                tensor[i] = (1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope))
+                tensor[i] = round((1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)))
             tensors.append(tensor)
         return np.array(tensors)
     
