@@ -225,15 +225,15 @@ class CoulombMatrix(Descriptor):
             tensor = np.empty([cm.shape[0], cm.shape[1]])
             for iy, y in enumerate(coulomb_matrix):
                 for ix, x in enumerate(y):
-                    tensor[ix, iy] = round((
-                        1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)), 0)
+                    tensor[ix, iy] = int(round((
+                        1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)), 0))
             tensors.append(tensor)
 
         # generate base layer
         tensor = np.empty([cm.shape[0], cm.shape[1]])
         for iy, y in enumerate(coulomb_matrix):
             for ix, x in enumerate(y):
-                tensor[ix, iy] = round((1/2)+((1/2)*math.tanh((x/phi)*slope)), 0)
+                tensor[ix, iy] = int(round((1/2)+((1/2)*math.tanh((x/phi)*slope)), 0))
         tensors.append(tensor)
 
         # generate negapositive layers
@@ -241,7 +241,7 @@ class CoulombMatrix(Descriptor):
             tensor = np.empty([cm.shape[0], cm.shape[1]])
             for iy, y in enumerate(coulomb_matrix):
                 for ix, x in enumerate(y):
-                    tensor[ix, iy] = round((
-                        1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)), 0)
+                    tensor[ix, iy] = int(round((
+                        1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)), 0))
             tensors.append(tensor)
         return np.array(tensors)
