@@ -195,7 +195,7 @@ class CoulombMatrix(Descriptor):
             m = np.pad(matrix, (0, size))
         return m
 
-    def normalize(self, coulomb_matrix, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
+    def normalize(coulomb_matrix, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
         """Normalizes the Coulomb Matrix by tensorizing it. May require padding.
         This method is an adaption from (1).
 
