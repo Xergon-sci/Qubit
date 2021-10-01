@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="Qubit",
-    version="0.0.1",
+    version="0.1.0",
     author="Michiel Jacobs",
     author_email="michiel.jacobs@vub.be",
     description="Cheminformatics package for use with machine learning.",

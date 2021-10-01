@@ -11,11 +11,9 @@ It will provide a wide range of tools from dataset construction to feature gener
    tutorial.rst
 
 .. automodule:: qubit
-.. automodule:: qubit.parsing.parsers
+.. automodule:: qubit.parsing
    :members:
-.. automodule:: qubit.preprocessing.descriptors
-   :members:
-.. automodule:: qubit.preprocessing.matrix_operations
+.. automodule:: qubit.descriptors
    :members:
 .. automodule:: qubit.utilities.gaussian
    :members:

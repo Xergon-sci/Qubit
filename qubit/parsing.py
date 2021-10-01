@@ -1,27 +1,27 @@
-class Parser():
+class Parser:
     """Parent class for all parsers.
     """
 
-    def __init__(self):
-        pass
+    def load(self):
+        """Placeholder
 
-    def load():
-        """Not Implemented
+        Raises:
+            NotImplementedError
         """
-        NotImplementedError
+        raise NotImplementedError
 
-    def write():
-        """Not Implemented
+    def write(self):
+        """Placeholder
+
+        Raises:
+            NotImplementedError
         """
-        NotImplementedError
+        raise NotImplementedError
 
-class XYZ:
+class XYZ(Parser):
     """Parser for parsing XYZ files.
     """
-
-    def __init__(self):
-        pass
-
+    
     def load(self, file):
         """Load the molecule from an XYZ file.
 

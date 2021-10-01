@@ -2,20 +2,79 @@ import warnings
 import math
 import numpy as np
 from qubit.data import atomnumber
+import random
 
 
 class Descriptor:
     """Parent class for all descriptors
     """
-
-    def __init__(self):
-        pass
-
+    
     def generate(self):
-        """Not Implemented
-        """
-        NotImplementedError
+        """Placeholder
 
+        Raises:
+            NotImplementedError
+        """
+        raise NotImplementedError
+    
+    def normalize(self):
+        """Placeholder
+
+        Raises:
+            NotImplementedError
+        """
+        raise NotImplementedError
+
+class CoulombVector(Descriptor):
+    def randomize(coulomb_vector):
+        random.shuffle(coulomb_vector)
+        return coulomb_vector
+    
+    def normalize(self, coulomb_vector, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
+
+        tensors = []
+        cv = np.array(coulomb_vector)
+
+        # generate negative layers
+        for i in range(negative_dimensions):
+            tensor = np.empty(len(cv))
+            for i, x in enumerate(coulomb_vector):
+                tensor[i] = round((1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)))
+            tensors.append(tensor)
+
+        # generate base layer
+        tensor = np.empty(len(cv))
+        for i, x in enumerate(coulomb_vector):
+            tensor[i] = round((1/2)+((1/2)*math.tanh((x/phi)*slope)))
+        tensors.append(tensor)
+
+        # generate negapositive layers
+        for i in range(positive_dimension):
+            tensor = np.empty(len(cv))
+            for i, x in enumerate(coulomb_vector):
+                tensor[i] = round((1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)))
+            tensors.append(tensor)
+        return np.array(tensors)
+    
+    def pad_vector(vector, size):
+        
+        if isinstance(vector, list):
+            vector = np.asarray(vector)
+            
+        # calculate the wished size
+        size = size - vector.size
+        
+        # confirm the size isn't less than the default matrix size
+        if size <= 0:
+            m = vector
+            warnings.warn(
+                "Trying to reduce the matrix size, default matrix size has been returned!",
+                Warning,
+            )
+        else:
+            # pad the matrix
+            m = np.pad(vector, (0, size))
+        return m
 
 class CoulombMatrix(Descriptor):
     """Provides functionality to generate the Coulomb Matrix (1).
@@ -47,7 +106,6 @@ class CoulombMatrix(Descriptor):
         """
         # determine the lenght of the molecule and atomnumbers
         n = len(atoms)
-        z = atoms
 
         if type(atoms[0]) == str:
             z = [atomnumber[atom] for atom in atoms]
@@ -74,7 +132,7 @@ class CoulombMatrix(Descriptor):
         else:
             return cm
 
-    def randomize(self, coulomb_matrix):
+    def randomize(coulomb_matrix):
         """Randomizes the Coulomb Matrix as described in (1).
 
         (1) Montavon, G.; Hansen, K.; Fazli, S.; Rupp, M.; Biegler, F.; Ziehe, A.;
@@ -137,7 +195,7 @@ class CoulombMatrix(Descriptor):
             m = np.pad(matrix, (0, size))
         return m
 
-    def normalize(coulomb_matrix, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
+    def normalize(self, coulomb_matrix, phi=1, slope=0.7, negative_dimensions=0, positive_dimension=0):
         """Normalizes the Coulomb Matrix by tensorizing it. May require padding.
         This method is an adaption from (1).
 
@@ -167,15 +225,15 @@ class CoulombMatrix(Descriptor):
             tensor = np.empty([cm.shape[0], cm.shape[1]])
             for iy, y in enumerate(coulomb_matrix):
                 for ix, x in enumerate(y):
-                    tensor[ix, iy] = (
-                        1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope))
+                    tensor[ix, iy] = int(round((
+                        1/2)+((1/2)*math.tanh(((x-(i*phi))/phi)*slope)), 0))
             tensors.append(tensor)
 
         # generate base layer
         tensor = np.empty([cm.shape[0], cm.shape[1]])
         for iy, y in enumerate(coulomb_matrix):
             for ix, x in enumerate(y):
-                tensor[ix, iy] = (1/2)+((1/2)*math.tanh((x/phi)*slope))
+                tensor[ix, iy] = int(round((1/2)+((1/2)*math.tanh((x/phi)*slope)), 0))
         tensors.append(tensor)
 
         # generate negapositive layers
@@ -183,7 +241,7 @@ class CoulombMatrix(Descriptor):
             tensor = np.empty([cm.shape[0], cm.shape[1]])
             for iy, y in enumerate(coulomb_matrix):
                 for ix, x in enumerate(y):
-                    tensor[ix, iy] = (
-                        1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope))
+                    tensor[ix, iy] = int(round((
+                        1/2)+((1/2)*math.tanh(((x+(i*phi))/phi)*slope)), 0))
             tensors.append(tensor)
         return np.array(tensors)
