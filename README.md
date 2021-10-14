@@ -4,7 +4,7 @@
 [![Read the Docs](https://img.shields.io/readthedocs/qubit?style=for-the-badge)](https://qubit.readthedocs.io/en/latest/)
 ![shields.io](https://img.shields.io/badge/BUILT%20WITH-SCIENCE-orange?style=for-the-badge)
 
-Qubit | [CNOS_Dataset](https://github.com/Xergon-sci/CNOS_Dataset) | [Experimental Reactivity Prediction](https://github.com/Xergon-sci/Experimental-Reactivity-Prediction) | [Alchemical DFT](https://github.com/Xergon-sci/Alchemical-DFT)
+Qubit | [CNOS_Dataset](https://github.com/Xergon-sci/CNOS_Dataset) | [AI Reactivity Prediction](https://github.com/Xergon-sci/ai-reactivity-descriptors) | [Alchemical DFT](https://github.com/Xergon-sci/Alchemical-DFT)
 ---
 
 # Qubit
