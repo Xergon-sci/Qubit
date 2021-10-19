@@ -3,6 +3,7 @@ import pytest
 import numpy as np
 from qubit.descriptors import Descriptor
 from qubit.descriptors import CoulombMatrix
+from qubit.descriptors import CoulombVector
 
 @pytest.fixture
 def descriptor():
@@ -46,3 +47,23 @@ def test_normalize():
     cm = CoulombMatrix.generate(atoms, xyz)
     tensor = CoulombMatrix.normalize(cm, negative_dimensions=1, positive_dimensions=1)
     assert tensor.shape == (3,5,5)
+
+def test_coulomb_vector():
+    cv = CoulombVector.generate(atoms, xyz)
+    assert cv.shape[1] == len(atoms)+1
+
+
+def test_coulomb_vector_randomize():
+    cv = CoulombVector.generate(atoms, xyz)
+    rcv = CoulombVector.randomize(cv)
+    assert rcv.shape == cv.shape
+
+def test_pad_matrix():
+    cvs = CoulombVector.generate(atoms, xyz)
+    pcv = CoulombVector.pad_vector(cvs[0], 10)
+    assert pcv.shape[0] == 10
+
+def test_vector_normalize():
+    cvs = CoulombVector.generate(atoms, xyz)
+    tensor = CoulombVector.normalize(cvs[0], positive_dimensions=1, negative_dimensions=1)
+    assert tensor.shape == (3, cvs[0].shape[0])
