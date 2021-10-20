@@ -217,6 +217,12 @@ class CoulombVector(Descriptor):
                     cm[j][i] = cm[i][j]
         return cm
 
+    def remove_atom(coulomb_vector):
+        atom = coulomb_vector[-1]
+        print(coulomb_vector)
+        coulomb_vector = coulomb_vector[:-1]
+        return atom, coulomb_vector
+
     def randomize(coulomb_vector):
         """Randomizes the Coulomb Vector.
         """

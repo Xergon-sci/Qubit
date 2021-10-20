@@ -67,3 +67,9 @@ def test_vector_normalize():
     cvs = CoulombVector.generate(atoms, xyz)
     tensor = CoulombVector.normalize(cvs[0], positive_dimensions=1, negative_dimensions=1)
     assert tensor.shape == (3, cvs[0].shape[0])
+
+def test_remove_atom():
+    cvs = CoulombVector.generate(atoms, xyz)
+    atom, vector = CoulombVector.remove_atom(cvs[0])
+    assert atom == 6
+    assert len(vector) == (len(cvs[0]) -1)
