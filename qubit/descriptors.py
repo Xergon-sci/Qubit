@@ -2,8 +2,8 @@ import warnings
 import math
 import numpy as np
 from qubit.data import atomnumber
+from qubit.data import atomsymbol
 import random
-
 
 class Descriptor:
     """Parent class for all descriptors
@@ -185,3 +185,87 @@ class CoulombMatrix(Descriptor):
             tensor = sigmoid((cm + (i * phi)) / phi)
             tensors.append(tensor)
         return np.array(tensors)
+
+class CoulombVector(Descriptor):
+    """Provides functionality to generate the Coulomb Vector.
+    """
+
+    def generate(atoms, xyz):
+        # determine the lenght of the molecule and atomnumbers
+        n = len(atoms)
+
+        if type(atoms[0]) == str:
+            z = [atomnumber[atom] for atom in atoms]
+        else:
+            z = atoms
+
+        # create an empty matrix
+        cm = np.zeros((n, n+1))
+
+        # calculate the values, populate the array and return the coulomb matrix
+        for i in range(n):
+            for j in range(n+1):
+                if i == j:
+                    cm[i][j] = 0.5 * z[i] ** 2.4
+                elif j == n:
+                    cm[i][j] = z[i]
+                elif i < j:
+                    cm[i][j] = (
+                        z[i] * z[j] /
+                        (np.linalg.norm(np.array(xyz[i]) - np.array(xyz[j])))
+                    )
+                    cm[j][i] = cm[i][j]
+        return cm
+
+    def remove_atom(coulomb_vector):
+        atom = coulomb_vector[-1]
+        print(coulomb_vector)
+        coulomb_vector = coulomb_vector[:-1]
+        return atom, coulomb_vector
+
+    def randomize(coulomb_vector):
+        """Randomizes the Coulomb Vector.
+        """
+        random.shuffle(coulomb_vector)
+        return coulomb_vector
+
+    def pad_vector(vector, size):
+        """Applies padding to a vector.
+
+        You can use this function to scale a vector to a given size.
+        The empty space is filled with zeros.
+
+        Example: Can be used to pad the Coulomb Vector.
+
+        Args:
+            matrix (2D np.array): Matrix to pad in a nested list format.
+            size (int): The size to scale the matrix to.
+
+        Returns:
+            ndarray: The padded vector.
+        """
+        if isinstance(vector, list):
+            vector = np.asarray(vector)
+
+        # calculate the wished size
+        size = size - vector.size
+        print(size)
+
+        # confirm the size isn't less than the default matrix size
+        if size <= 0:
+            m = vector
+            warnings.warn(
+                "Trying to reduce the matrix size, default matrix size has been returned!",
+                Warning,
+            )
+        else:
+            # pad the matrix
+            m = np.pad(vector, (0, size))
+        return m
+
+    def normalize(coulomb_vector, phi=1, negative_dimensions=0, positive_dimensions=0):
+        return CoulombMatrix.normalize(
+            coulomb_vector,
+            phi=phi,
+            negative_dimensions=negative_dimensions,
+            positive_dimensions=positive_dimensions)
