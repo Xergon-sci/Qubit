@@ -219,7 +219,6 @@ class CoulombVector(Descriptor):
 
     def remove_atom(coulomb_vector):
         atom = coulomb_vector[-1]
-        print(coulomb_vector)
         coulomb_vector = coulomb_vector[:-1]
         return atom, coulomb_vector
 
@@ -249,7 +248,6 @@ class CoulombVector(Descriptor):
 
         # calculate the wished size
         size = size - vector.size
-        print(size)
 
         # confirm the size isn't less than the default matrix size
         if size <= 0:
